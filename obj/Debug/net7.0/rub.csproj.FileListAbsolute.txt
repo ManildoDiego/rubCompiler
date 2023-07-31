@@ -1,0 +1,15 @@
+C:\Users\diego\Downloads\code\csharp\rub\obj\Debug\net7.0\rub.csproj.AssemblyReference.cache
+C:\Users\diego\Downloads\code\csharp\rub\obj\Debug\net7.0\rub.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\diego\Downloads\code\csharp\rub\obj\Debug\net7.0\rub.AssemblyInfoInputs.cache
+C:\Users\diego\Downloads\code\csharp\rub\obj\Debug\net7.0\rub.AssemblyInfo.cs
+C:\Users\diego\Downloads\code\csharp\rub\obj\Debug\net7.0\rub.csproj.CoreCompileInputs.cache
+C:\Users\diego\Downloads\code\csharp\rub\bin\Debug\net7.0\rub.exe
+C:\Users\diego\Downloads\code\csharp\rub\bin\Debug\net7.0\rub.deps.json
+C:\Users\diego\Downloads\code\csharp\rub\bin\Debug\net7.0\rub.runtimeconfig.json
+C:\Users\diego\Downloads\code\csharp\rub\bin\Debug\net7.0\rub.dll
+C:\Users\diego\Downloads\code\csharp\rub\bin\Debug\net7.0\rub.pdb
+C:\Users\diego\Downloads\code\csharp\rub\obj\Debug\net7.0\rub.dll
+C:\Users\diego\Downloads\code\csharp\rub\obj\Debug\net7.0\refint\rub.dll
+C:\Users\diego\Downloads\code\csharp\rub\obj\Debug\net7.0\rub.pdb
+C:\Users\diego\Downloads\code\csharp\rub\obj\Debug\net7.0\rub.genruntimeconfig.cache
+C:\Users\diego\Downloads\code\csharp\rub\obj\Debug\net7.0\ref\rub.dll

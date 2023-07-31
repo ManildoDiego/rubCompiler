@@ -1,0 +1,16 @@
+@Math.abs:
+	jl $a0, 0, @Math.__abs1
+	else @Math.__abs2
+	return
+
+@Math.__abs1:
+	muli $v0, $a0, -1
+	return
+
+@Math.__abs2:
+	cpy $v0, $a0
+	return
+
+@Math.sin:
+	muli 
+	return
