@@ -24,13 +24,42 @@ namespace rub.Instructions
         
         public abstract void Execute();
 
-        protected static Save GetRegister(bool isUnsigned, string reg)
+        private static Save GetRegister(bool isUnsigned, string reg)
         {
             var rValue = Compiler.registers[reg];
             return isUnsigned ? Math.Abs(rValue) : rValue;
         }
 
-        protected static Save ExecuteLogicalOperation(string op, Save rs, Save rt) => op switch
+        protected void ExecuteTypeRI(string rs, string? _rt = null, string? _imm = null, bool isTypeI = false)
+        {
+            var secondOp = !isTypeI ? _rt! : _imm!;
+
+            if (!isTypeI)
+            {
+                CheckValues(Rd, rs, secondOp);
+            }
+            else
+            {
+                CheckValues(Rd, rs, imm: secondOp);
+            }
+
+            var isUnsigned = Opcode.EndsWith("u");
+
+            var modOp = 
+                !isTypeI 
+                    ? isUnsigned ? Opcode[..^1] : Opcode 
+                    : isUnsigned ? Opcode[..^2] : Opcode[..^1];
+
+            var op1 = GetRegister(isUnsigned, rs);
+            var op2 = 
+                !isTypeI 
+                    ? GetRegister(isUnsigned, secondOp) 
+                    : isUnsigned ? Math.Abs(GetImmValue(secondOp)) : GetImmValue(secondOp);
+
+            Compiler.registers[Rd] = ExecuteLogicalOperation(modOp, op1, op2);
+        }
+
+        private static Save ExecuteLogicalOperation(string op, Save rs, Save rt) => op switch
         {
             "add" => rs + rt,
             "sub" => rs - rt,

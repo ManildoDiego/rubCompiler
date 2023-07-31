@@ -19,15 +19,7 @@ namespace rub.Instructions
         
         public override void Execute()
         {
-            CheckValues(Rd, _rs, imm: _imm);
-            var isUnsigned = Opcode!.EndsWith("u"); 
-
-            var modOp = isUnsigned ? Opcode[..^2] : Opcode[..^1];
-
-            var rs = GetRegister(isUnsigned, _rs);
-            var imm = isUnsigned ? Math.Abs(GetImmValue(_imm)) : GetImmValue(_imm);
-            
-            Compiler.registers[Rd] = ExecuteLogicalOperation(modOp, rs, imm);
+            ExecuteTypeRI(_rs, _imm: _imm, isTypeI: true);
         }
     }
 }

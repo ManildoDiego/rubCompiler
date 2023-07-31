@@ -16,15 +16,7 @@ namespace rub.Instructions
 
         public override void Execute()
         {
-            CheckValues(Rd, _rs, _rt);
-            var isUnsigned = Opcode!.EndsWith("u"); 
-
-            var modOp = isUnsigned ? Opcode[..^1] : Opcode;
-            
-            var rs = GetRegister(isUnsigned, _rs);
-            var rt = GetRegister(isUnsigned, _rt);
-            
-            Compiler.registers[Rd] = ExecuteLogicalOperation(modOp, rs, rt);
+            ExecuteTypeRI(_rs, _rt);
         }
     }
 }
