@@ -6,19 +6,17 @@ namespace rub.Instructions
 
     public class OInst : Inst
     {
-        private readonly string _tag;
         private readonly string _lastOpcode;
-        private readonly bool _condition;
 
         public OInst(string opcode, string rd, string tag, string lastOpcode, bool condition, LineHolder inst, Size line)
-            : base(opcode, rd, inst, line)            
+            : base(opcode: opcode,
+                   rd: rd,
+                   tag: tag,
+                   condition: condition,
+                   inst: inst,
+                   instTracker: line)
         {
-            _tag = tag;
             _lastOpcode = lastOpcode;
-            _condition = condition;
-            _errors.SetLine(InstTracker);
-            _errors.SetLine(inst.LineNumber);
-            _errors.SetErrorSufix(inst.FilePath);
         }
 
         public override void Execute()
@@ -51,8 +49,8 @@ namespace rub.Instructions
                         return;
                     }
 
-                    CheckValues(tag: _tag);
-                    var dir = JmpInst(_tag, !_condition);
+                    CheckValues(tag: Tag);
+                    var dir = JmpInst(Tag, !Condition);
                     if (dir == -1)
                         return;
 

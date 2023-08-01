@@ -1,10 +1,4 @@
 .link "stdio.rub"
 
 @main:
-	li $a0, 123
-
-	call @Math.abs
-
-	print $v0
-
-	leave
+	

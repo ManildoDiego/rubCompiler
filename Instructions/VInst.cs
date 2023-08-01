@@ -1,24 +1,18 @@
-using System.Drawing;
-
 namespace rub.Instructions
 {
     using Size = Int64;
 
     public class VInst : Inst
     {
-        private readonly string _rs;
-        private readonly string _imm;
-
-        public string Text { get; private set; } 
 
         public VInst(string opcode, string rd, string rs, string imm, LineHolder inst, Size line)
-            : base(opcode, rd, inst, line)            
+            : base(opcode: opcode,
+                   rd: rd,
+                   rs: rs,
+                   imm: imm,
+                   inst: inst,
+                   instTracker: line)
         {
-            _rs = rs;
-            _imm = imm;
-            Text = "";
-            _errors.SetLine(inst.LineNumber);
-            _errors.SetErrorSufix(inst.FilePath);
         }
         
         public override void Execute()
@@ -26,12 +20,12 @@ namespace rub.Instructions
             switch (Opcode)
             {
                 case "li":
-                    CheckValues(Rd, imm: _imm);
-                    Text = $"addi {Rd}, $zero, {_imm}";
+                    CheckValues(Rd, imm: Imm);
+                    Text = $"addi {Rd}, $zero, {Imm}";
                     break;
                 case "cpy":
-                    CheckValues(Rd, _rs);
-                    Text = $"add {Rd}, $zero, {_rs}";
+                    CheckValues(Rd, Rs);
+                    Text = $"add {Rd}, $zero, {Rs}";
                     break;
             }
         }

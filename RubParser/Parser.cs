@@ -76,13 +76,13 @@ namespace rub.RubParser
 		{
             for (_instTracker = _mainIndex; _instTracker < _lines.LongLength; _instTracker++)
             {
-                var line = _lines[_instTracker];
-                if (string.IsNullOrEmpty(line.Line))
+                _line = _lines[_instTracker];
+                if (string.IsNullOrEmpty(_line.Line))
                     continue;
 
-                _errors.SetLine(line.LineNumber);
-                _errors.SetErrorSufix("rub " + line.FilePath);
-                Execute(line);
+                _errors.SetLine(_line.LineNumber);
+                _errors.SetErrorSufix("rub " + _line.FilePath);
+                Execute(_line);
             }
 
 			_errors.Print();

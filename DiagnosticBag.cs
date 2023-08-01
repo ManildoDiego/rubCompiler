@@ -46,7 +46,7 @@ namespace rub
             {
                 var err = (Line == null || Line == 0)
                     ? $"[{_sufixBag} {_prefix}] {Error}" 
-                    : $"[{_sufixBag} {_prefix} {Line}] {Error}";
+                    : $"[{_sufixBag} {_prefix}] {Line} {Error}";
 
                 Console.ForegroundColor = _color;
                 Console.WriteLine(err);

@@ -9,13 +9,27 @@ namespace rub.Instructions
 
         protected string Opcode { get; }
         protected string Rd { get; }
+        protected string Rs { get; }
+        protected string Rt { get; }
+        protected string Imm { get; }
+        protected string Tag { get; }
+        public bool Condition { get; protected set; }
+        public string Text { get; protected set; } 
+
         public Size InstTracker { get; protected set; }
         public DiagnosticBag Errors => _errors;
 
-        protected Inst(string opcode, string rd, LineHolder inst, Size instTracker)
+        protected Inst(string opcode, LineHolder inst, Size instTracker, string rd = "", string rs = "", string rt = "", string imm = "", string tag = "", bool condition = false)
         {
             Opcode = opcode;
             Rd = rd;
+            Rs = rs;
+            Rt = rt;
+            Imm = imm;
+            Tag = tag;
+            Condition = condition;
+            Text = "";
+
             InstTracker = instTracker;
 
             _errors.SetLine(inst.LineNumber);
@@ -30,17 +44,17 @@ namespace rub.Instructions
             return isUnsigned ? Math.Abs(rValue) : rValue;
         }
 
-        protected void ExecuteTypeRI(string rs, string? _rt = null, string? _imm = null, bool isTypeI = false)
+        protected void ExecuteTypeRI(bool isTypeI = false)
         {
-            var secondOp = !isTypeI ? _rt! : _imm!;
+            var secondOp = !isTypeI ? Rt : Imm;
 
             if (!isTypeI)
             {
-                CheckValues(Rd, rs, secondOp);
+                CheckValues(Rd, Rs, secondOp);
             }
             else
             {
-                CheckValues(Rd, rs, imm: secondOp);
+                CheckValues(Rd, Rs, imm: secondOp);
             }
 
             var isUnsigned = Opcode.EndsWith("u");
@@ -50,7 +64,7 @@ namespace rub.Instructions
                     ? isUnsigned ? Opcode[..^1] : Opcode 
                     : isUnsigned ? Opcode[..^2] : Opcode[..^1];
 
-            var op1 = GetRegister(isUnsigned, rs);
+            var op1 = GetRegister(isUnsigned, Rs);
             var op2 = 
                 !isTypeI 
                     ? GetRegister(isUnsigned, secondOp) 

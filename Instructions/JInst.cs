@@ -4,21 +4,16 @@ namespace rub.Instructions
     using Size = Int64;
     public class JInst : Inst
     {
-        private readonly string _rs;
-        private readonly string _imm;
-        private readonly string _tag;
-
-        public bool Condition { get; private set; }
-
-        public JInst(string opcode, string rd, string rs, string imm, bool condition, string tag, LineHolder inst, Size line)
-            : base(opcode, rd, inst, line)
+        public JInst(string opcode, string rs, string rt, string imm, bool condition, string tag, LineHolder inst, Size line)
+            : base(opcode: opcode,
+                   rs: rs,
+                   rt: rt,
+                   imm: imm,
+                   condition: condition,
+                   tag: tag,
+                   inst: inst,
+                   instTracker: line)
         {
-            _rs = rs;
-            _imm = imm;
-            Condition = condition;
-            _tag = tag;
-            _errors.SetLine(inst.LineNumber);
-            _errors.SetErrorSufix(inst.FilePath);
         }
 
         private bool GetJmpCondition(Save op1, Save op2)
@@ -39,21 +34,21 @@ namespace rub.Instructions
         {
             if (Opcode != "call")
             {
-                var c = _rs == "";
-                var rs = c ? null : Rd;
-                var imm = c ? null : _imm;
+                var c = Rt == "";
+                var toSee1 = c ? null : Rt;
+                var toSee2 = !c ? null : Imm;
+                
+                CheckValues(rs: Rs, rt: toSee1, imm: toSee2);
 
-                CheckValues(rs: rs, rt: _rs, imm: imm);
-
-                var op1 = Compiler.registers[Rd];
-                var op2 = c ? GetImmValue(_imm) : Compiler.registers[_rs];
+                var op1 = Compiler.registers[Rs];
+                var op2 = c ? GetImmValue(Imm) : Compiler.registers[Rs];
 
                 Condition = GetJmpCondition(op1, op2);
             }
 
-            CheckValues(tag: _tag);
+            CheckValues(tag: Tag);
 
-            var dir = JmpInst(_tag, Condition);
+            var dir = JmpInst(Tag, Condition);
 
             if (dir != -1)
             {
